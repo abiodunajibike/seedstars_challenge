@@ -7,9 +7,6 @@ from datetime import datetime
 
 
 class JenkinsJobDB(object):
-    
-    def db_name(self):
-        return 'jenkins'
         
     def get_db_connection(self):
         '''Connect to an existing sqlite database or create one, if it doesnt exist'''
@@ -30,14 +27,13 @@ class JenkinsJobDB(object):
         '''Insert job information in table jenkins_job'''
         db_conn.execute("INSERT INTO jenkins_job (name, status, checked_date) \
                          VALUES (?, ?, ?)", (job_name, job_status, date));
-        
     
     def is_jobname_in_db(self, db_conn, job_name):
         '''Check if job exists in database to avoid duplicates'''        
-        result = db_conn.execute("SELECT * from jenkins_job where name='" + job_name + "'")
-        all_result = result.fetchall()
-        return len(all_result) > 0
-    
+        result = db_conn.execute("SELECT count(*) from jenkins_job where name='" + job_name + "'")
+        data_count = result.fetchone()[0]
+        return data_count > 0
+        
     def get_all_jobs(self):
         '''Get all jobs in table jenkins_job'''
         db_conn = self.get_db_connection()
@@ -82,8 +78,8 @@ class JenkinsJob(object):
             job_name  = job.get('name')
             
             '''Check if job exists in db'''
-            check_job = self.db_conn.is_jobname_in_db(db_conn, job_name)
-            if not check_job:                
+            job_exist = self.db_conn.is_jobname_in_db(db_conn, job_name)
+            if not job_exist:
                 job_color = str(job.get('color')) #covert to string for None values
                 '''Evaluate jpb status using its color'''
                 job_status = self.eval_job_status(job_color)
