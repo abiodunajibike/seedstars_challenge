@@ -1,0 +1,30 @@
+
+{% extends 'task/base.html' %}
+{% load staticfiles %}
+        
+{% block page_title %}
+    Welcome page
+{% endblock page_title %}
+
+{% block container_content %}
+
+      {% include 'snippet/header.html' with header_msg='Django Challenge Welcome Page'%}
+       
+      <div class="row-fluid text-center">
+            <a href="{% url 'user_list' %}"><h4>View User List</h4></a>
+      </div>
+            
+      <div class="row-fluid text-center">
+            <a href="{% url 'add_user' %}"><h4>Create User Record</h4></a>
+      </div>
+            
+
+{% endblock container_content %}
+
+{% block return_home %}
+
+{% endblock %}
+
+ 
+
+

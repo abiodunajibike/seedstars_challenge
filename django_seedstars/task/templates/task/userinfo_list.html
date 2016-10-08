@@ -1,0 +1,41 @@
+{% extends 'task/base.html' %}    
+        
+{% block page_title %}
+    User Info List
+{% endblock page_title %}
+
+{% block container_content %}
+      
+      {% include 'snippet/header.html' with header_msg='User List' %}
+      
+      {% for msg in messages %}
+            <div class="alert alert-success">
+              <h5 class="text-center">{{ msg }}</h5>
+            </div>
+      {% endfor %}
+      
+      <div class="table-responsive">
+            <table class="table table-bordered">
+               
+                  <tr>
+                      <th>S/N</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                  </tr>
+                  {% for user in object_list %}
+                  <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                  </tr>
+                  {% endfor %}
+                  
+            </table>
+      </div>
+      
+
+{% endblock container_content %}
+
+ 
+
+

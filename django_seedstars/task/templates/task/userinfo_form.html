@@ -1,0 +1,46 @@
+{% extends 'task/base.html' %}    
+        
+{% block page_title %}
+    Add Record
+{% endblock page_title %}
+
+
+{% block container_content %}
+<form class="form-class"  method="POST" action="">
+{% csrf_token %}
+
+    
+    {% include 'snippet/header.html' with header_msg='Add User'%}
+
+    {% for msg in messages %}
+    <div class="alert alert-danger">
+      <h5 class="text-center">{{ msg }}</h5>
+    </div>
+    {% endfor %}
+    
+    {% if form.errors %}
+      <label class="error">Please correct the error(s) below</label>
+    {% endif %}
+     
+    {% for field in form %}
+    <div class="row-fluid">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {% if field.error %}<label class="error">{{ field.errors }}</label>{% endif %}
+    </div>
+    {% endfor %}
+     
+    <div class="row-fluid" style="padding-top: 40px;">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </div>
+  
+
+</form>
+
+{% endblock container_content %}
+
+{% block script %}
+
+{% endblock %}
+
+
